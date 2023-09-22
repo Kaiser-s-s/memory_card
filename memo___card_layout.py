@@ -1,156 +1,139 @@
 ''' Вікно для картки питання '''
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QApplication, QWidget,
-    QTableWidget, QListWidget, QListWidgetItem,
-    QLineEdit, QFormLayout,
-    QHBoxLayout, QVBoxLayout,
-    QGroupBox, QButtonGroup, QRadioButton,
-    QPushButton, QLabel, QSpinBox)
-from memo___app import app
+        QApplication, QWidget, 
+        QTableWidget, QListWidget, QListWidgetItem,
+        QLineEdit, QFormLayout,
+        QHBoxLayout, QVBoxLayout, 
+        QGroupBox, QButtonGroup, QRadioButton,  
+        QPushButton, QLabel, QSpinBox)
+from PyQt5.QtCore import QTimer
+from memo___app import app 
+
+timer = QTimer()
+timer.setInterval()
+
+
+question = 'Яблуко'
+answer = 'apple'
+wrong_answer1 = 'caterpillar'
+wrong_answer2 = 'application'
+wrong_answer3 = 'building'
+answers = [answer]
+questions = [answer, wrong_answer1, wrong_answer2, wrong_answer3]
+
+QHb1 = QHBoxLayout()
+QHb2 = QHBoxLayout()
+QHb3 = QHBoxLayout()
+QHb4 = QHBoxLayout()
+QVb1 = QVBoxLayout()
+QVb2 = QVBoxLayout()
+QVb3 = QVBoxLayout()
+QVb4 = QVBoxLayout()
+QVb5 = QVBoxLayout()
+QVb6 = QVBoxLayout()
+
+button = QPushButton("Відповісти")
+button.setFixedSize(300, 30)
+button2 = QPushButton("Меню")
+button3 = QPushButton("Відпочити")
+
+RadioGroupBox = QGroupBox("Варіанти відповідей")
+RadioGroup = QButtonGroup()
+AnsGroupBox = QGroupBox("Результат теста")
+
+rbtn_1 = QRadioButton(wrong_answer1)
+rbtn_2 = QRadioButton(answer)
+rbtn_3 = QRadioButton(wrong_answer2)
+rbtn_4 = QRadioButton(wrong_answer3)
+
+radio_list = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
+RadioGroup.addButton(rbtn_1)
+RadioGroup.addButton(rbtn_2)
+RadioGroup.addButton(rbtn_3)
+RadioGroup.addButton(rbtn_4)
+
+spinbox = QSpinBox()
+RadioGroupBox.setFixedHeight(265)
+AnsGroupBox.setFixedHeight(265)
+spinbox.setFixedWidth(35) 
+label = QLabel("хвилин")
+lb_Result = QLabel('')
+ques = QLabel(question)
+abc = QLabel('')
+ab = QLabel('')
+right_answer = QLabel('')
+
+QHb4.addWidget(button2, alignment=Qt.AlignTop | Qt.AlignLeft)
+QHb4.addWidget(ab, alignment=Qt.AlignTop | Qt.AlignRight)
+QHb4.addWidget(button3, alignment=Qt.AlignTop | Qt.AlignRight)
+QHb4.addWidget(spinbox)
+QHb4.addWidget(label)
+
+QVb2.addWidget(abc)
+QVb6.addWidget(lb_Result)
+QVb6.addWidget(right_answer, alignment=Qt.AlignTop | Qt.AlignCenter)
+QHb1.addWidget(rbtn_1)
+QHb1.addWidget(rbtn_2)
+QHb2.addWidget(rbtn_3)
+QHb2.addWidget(rbtn_4)
+
+QHb3.addWidget(ques, alignment=Qt.AlignCenter)
+
+QVb2.addWidget(button, alignment=Qt.AlignTop | Qt.AlignCenter)
+
+QHb4.addLayout(QVb5)
+QHb4.addLayout(QVb4)
+QVb3.addLayout(QHb4)
+QVb3.addLayout(QHb3)
+QVb1.addLayout(QHb1)
+QVb1.addLayout(QHb2)
+QVb3.addWidget(RadioGroupBox)
+QVb3.addWidget(AnsGroupBox)
+QVb3.addLayout(QVb2)
+
+AnsGroupBox.setLayout(QVb6)
+RadioGroupBox.setLayout(QVb1)
+
+AnsGroupBox.hide()
+
+def show_result():
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    button.setText("Наступне питання")
+
+def show_question():
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
+    button.setText("Відповісти")
+    RadioGroup.setExclusive(False)
+    rbtn_1.setChecked(False)
+    rbtn_2.setChecked(False)
+    rbtn_3.setChecked(False)
+    rbtn_4.setChecked(False)
+    RadioGroup.setExclusive(True)
+
+def sleep_card():
+    pass
+
+def show_card():
+    pass
+
 
 # віджети, які треба буде розмістити:
-# кнопка повернення в основне вікно
-menu_btn = QPushButton("Меню")
-
+# кнопка повернення в основне вікно 
 # кнопка прибирає вікно і повертає його після закінчення таймера
-rest_btn = QPushButton("Відпочити")
 # введення кількості хвилин
-box_Minutes = QSpinBox()
-box_Minutes.setValue(30)
-min_text = QLabel('хвилин')
 # кнопка відповіді "Ок" / "Наступний"
-next_btn = QPushButton("Відповісти")
 # текст питання
-question_text = QLabel("sadasd")
+
 # Опиши групу перемикачів
-Group_Btn_Box = QGroupBox("Відповіді на питання")
-Group_Radio_Btn = QButtonGroup()
 
-Radio_btn_1 = QRadioButton("")
-Radio_btn_2 = QRadioButton("")
-Radio_btn_3 = QRadioButton("")
-Radio_btn_4 = QRadioButton("")
-
-Group_Radio_Btn.addButton(Radio_btn_1)
-Group_Radio_Btn.addButton(Radio_btn_2)
-Group_Radio_Btn.addButton(Radio_btn_3)
-Group_Radio_Btn.addButton(Radio_btn_4)
-
-layout_ans1 = QHBoxLayout()
-layout_ans2 = QVBoxLayout()
-layout_ans3 = QVBoxLayout()
-
-layout_ans2.addWidget(Radio_btn_1)
-layout_ans2.addWidget(Radio_btn_3)
-
-layout_ans3.addWidget(Radio_btn_2)
-layout_ans3.addWidget(Radio_btn_4)
-
-layout_ans1.addLayout(layout_ans2)
-layout_ans1.addLayout(layout_ans3)
-
-Group_Btn_Box.setLayout(layout_ans1)
 # Опиши панень з результатами
-AnsGroupBox = QGroupBox("Результат теста")
-# Напис "правильно"/"неправильно"
-lb_Result = QLabel('asd')
-lb_Correct = QLabel('asdds')  # Текст правильної відповіді
 
-layout_res = QVBoxLayout()
-layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
-layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
-AnsGroupBox.setLayout(layout_res)
-AnsGroupBox.hide()
 # Розмісти весь вміст в лейаути. Найбільшим лейаутом буде layout_card
-SleepGroupBox = QGroupBox("")
-sleep_Lb = QLabel("ПЕРЕРЫВ!!!")
-sleep_btn = QPushButton("Возобновить тест")
 
-sleep_layout = QVBoxLayout()
-sleep_layout.addWidget(sleep_Lb, alignment= Qt.AlignCenter)
-sleep_layout.addWidget(sleep_btn)
-SleepGroupBox.setLayout(sleep_layout)
-SleepGroupBox.hide()
-
-
-
-layout_card = QVBoxLayout()
-
-layout_main_1 = QHBoxLayout()
-layout_main_2 = QHBoxLayout()
-layout_main_3 = QHBoxLayout()
-layout_main_4 = QHBoxLayout()
-
-layout_main_1.addWidget(menu_btn)
-layout_main_1.addStretch(1)
-layout_main_1.addWidget(rest_btn)
-layout_main_1.addWidget(box_Minutes)
-layout_main_1.addWidget(min_text)
-
-
-layout_main_2.addWidget(question_text, alignment=Qt.AlignCenter)
-
-layout_main_3.addWidget(Group_Btn_Box)
-layout_main_3.addWidget(AnsGroupBox)
-layout_main_3.addWidget(SleepGroupBox)
-
-layout_main_4.addStretch(1)
-layout_main_4.addWidget(next_btn, stretch=2)
-layout_main_4.addStretch(1)
-
-
-layout_card.addLayout(layout_main_1, stretch=1)
-layout_card.addLayout(layout_main_2, stretch=2)
-layout_card.addLayout(layout_main_3, stretch=8)
-layout_card.addLayout(layout_main_4, stretch=1)
 # Результат роботи цього модуля: віджети поміщені всередину layout_card, який можна призначити вікну.
 
 
-def show_result():
-    ''' показати панель відповідей '''
-    Group_Btn_Box.hide()
-    AnsGroupBox.show()
-    next_btn.setText("Наступне питання!")
-
-
-def show_question():
-    ''' показати панель запитань '''
-    AnsGroupBox.hide()
-    Group_Btn_Box.show()
-
-    next_btn.setText("Відповісти")
-
-    Group_Radio_Btn.setExclusive(False)
-    Radio_btn_1.setChecked(False)
-    Radio_btn_2.setChecked(False)
-    Radio_btn_3.setChecked(False)
-    Radio_btn_4.setChecked(False)
-    Group_Radio_Btn.setExclusive(True)
-
-def sleep_hide():
-    menu_btn.hide()
-    rest_btn.hide()
-    box_Minutes.hide()
-    next_btn.hide()
-    question_text.hide()
-    Group_Btn_Box.hide()
-    AnsGroupBox.hide()
-    min_text.hide()
-
-
-def sleep_show():
-    menu_btn.show()
-    rest_btn.show()
-    box_Minutes.show()
-    next_btn.show()
-    question_text.show()
-    min_text.show()
-    if next_btn.text() != 'Наступне питання!':
-        Group_Btn_Box.show()
-    elif next_btn.text() == 'Наступне питання!':
-        AnsGroupBox.show()
-
-
-    
-    

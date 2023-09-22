@@ -1,51 +1,49 @@
-
+from PyQt5.QtWidgets import QLineEdit, QFormLayout, QListView
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
-    QApplication, QWidget,
-    QTableWidget, QListWidget, QListWidgetItem,
-    QLineEdit, QFormLayout,
-    QHBoxLayout, QVBoxLayout,
-    QGroupBox, QButtonGroup, QRadioButton,
-    QPushButton, QLabel, QSpinBox, QLineEdit, QFormLayout, QListView)
-from memo___app import app
+        QApplication, QWidget, 
+        QTableWidget, QListWidget, QListWidgetItem,
+        QLineEdit, QFormLayout,
+        QHBoxLayout, QVBoxLayout, 
+        QGroupBox, QButtonGroup, QRadioButton,  
+        QPushButton, QLabel, QSpinBox)
+from memo___app import app 
 
 layout_form = QFormLayout()
-list_questions = QListView()
+list_view = QListView()
+txt_answer1 = QLineEdit('')
+txt_answer2 = QLineEdit('')
+txt_answer3 = QLineEdit('')
+txt_answer4 = QLineEdit('')
+txt_answer5 = QLineEdit('')
+layout_form.addRow("Питання:", txt_answer1)
+layout_form.addRow("Правильна відповідь:", txt_answer2)
+layout_form.addRow("Неправильний варіант №1:", txt_answer3)
+layout_form.addRow("Неправильний варіант №2:", txt_answer4)
+layout_form.addRow("Неправильний варіант №3:", txt_answer5)
+
+list_questions = [txt_answer1, txt_answer2, txt_answer3, txt_answer4, txt_answer5]
+
+but1 = QPushButton("Нове питання")
+but2 = QPushButton("Видалити питання")
+but3 = QPushButton("Почати тренування")
+
+but3.setFixedWidth(450)
+list_view.setFixedWidth(375)
+
+QVb1 = QVBoxLayout()
+QHb1 = QHBoxLayout()
+QHb2 = QHBoxLayout()
+QHb3 = QHBoxLayout()
+
+QVb1.addLayout(QHb3)
+QVb1.addLayout(QHb1)
+QVb1.addLayout(QHb2)
+
+QHb3.addWidget(list_view, alignment=Qt.AlignLeft)
+QHb3.addLayout(layout_form)
+QHb1.addWidget(but1)
+QHb1.addWidget(but2)
+QHb2.addWidget(but3)
 
 
-txt_Question = QLineEdit("")
-txt_Answer = QLineEdit("")
-txt_Wrong_answer_1 = QLineEdit('')
-txt_Wrong_answer_2 = QLineEdit('')
-txt_Wrong_answer_3 = QLineEdit('')
-
-layout_form.addRow('Питання', txt_Question)
-layout_form.addRow('Правильна Відповідь', txt_Answer)
-layout_form.addRow('Неправильна Відповідь 1', txt_Wrong_answer_1)
-layout_form.addRow('Неправильна Відповідь 2', txt_Wrong_answer_2)
-layout_form.addRow('Неправильна Відповідь 3', txt_Wrong_answer_3)
-
-btn_del = QPushButton("Видалити питання")
-btn_new = QPushButton("Додати питання")
-btn_start = QPushButton("Почати тестування")
-
-
-main_layaut_menu = QVBoxLayout()
-layout_H1 = QHBoxLayout()
-layout_H2 = QHBoxLayout()
-layout_H3 = QHBoxLayout()
-
-
-layout_H1.addWidget(list_questions)
-
-layout_H2.addWidget(btn_new, stretch=1)
-layout_H2.addWidget(btn_del, stretch=1)
-
-layout_H3.addStretch(1)
-layout_H3.addWidget(btn_start, stretch=2)
-layout_H3.addStretch(1)
-
-layout_H1.addLayout(layout_form)
-main_layaut_menu.addLayout(layout_H1)
-main_layaut_menu.addLayout(layout_H2)
-main_layaut_menu.addLayout(layout_H3)
